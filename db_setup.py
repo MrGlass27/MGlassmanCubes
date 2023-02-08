@@ -11,7 +11,7 @@ sql_create_cubes_table = """ CREATE TABLE IF NOT EXISTS cubes_table (
                                     organization text NOT NULL,
                                     email text NOT NULL,
                                     website text,
-                                    phone# text,
+                                    phone text,
                                     opportunities text,
                                     time text,
                                     permission text

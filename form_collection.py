@@ -1,6 +1,7 @@
-import urllib.request
-import json
 import configparser
+import requests
+import sys
+from requests.auth import HTTPBasicAuth
 
 
 # gets apikey from config file
@@ -10,14 +11,6 @@ def get_apikey():
     config.read('app.config')
     apikey_from_file = config['secrets']['apikey']
     return apikey_from_file
-
-
-# gets password from config file
-def get_password():
-    config = configparser.ConfigParser()
-    config.read('app.config')
-    password_from_file = config['secrets']['password']
-    return password_from_file
 
 
 # get form identifier from config file
@@ -37,20 +30,16 @@ def get_subdomain():
 
 
 # call API to get json data of form entries
-def get_json():
-    subdomain = get_subdomain()
-    base_url = 'https://{}.wufoo.com/api/v3/'.format(subdomain)
-    username = get_apikey()
-    password = get_password()
-    identifier = get_identifier()
-    password_manager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
-    password_manager.add_password(None, base_url, username, password)
-    handler = urllib.request.HTTPBasicAuthHandler(password_manager)
-    opener = urllib.request.build_opener(handler)
-    urllib.request.install_opener(opener)
-    response = urllib.request.urlopen(base_url + 'forms/{}/entries.json?sort=EntryId&sortDirection=DESC'.format(identifier))
-    data = json.load(response)
-    return json.dumps(data, indent=4, sort_keys=True)
+url = "https://{}.wufoo.com/api/v3/forms/{}/entries/json".format(get_subdomain(), get_identifier())
+
+
+def get_json() -> dict:
+    response = requests.get(url, auth=HTTPBasicAuth(get_apikey(), 'pass'))
+    if response.status_code != 200:  # if we don't get an ok response we have trouble
+        print(f"Failed to get data, response code:{response.status_code} and error message: {response.reason} ")
+        sys.exit(-1)
+    jsonresponse = response.json()
+    return jsonresponse
 
 
 # write json data from form entries to a file
@@ -59,4 +48,4 @@ def write_to_file():
         outfile.write(get_json())
 
 
-write_to_file()
+# write_to_file()
