@@ -40,12 +40,3 @@ def get_json() -> dict:
         sys.exit(-1)
     jsonresponse = response.json()
     return jsonresponse
-
-
-# write json data from form entries to a file
-def write_to_file():
-    with open("form_info.json", "w") as outfile:
-        outfile.write(get_json())
-
-
-# write_to_file()
