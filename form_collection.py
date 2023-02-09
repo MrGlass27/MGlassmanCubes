@@ -13,22 +13,6 @@ def get_apikey():
     return apikey_from_file
 
 
-# get form identifier from config file
-def get_identifier():
-    config = configparser.ConfigParser()
-    config.read('app.config')
-    identifier_from_file = config['secrets']['identifier']
-    return identifier_from_file
-
-
-# get subdomain from config file
-def get_subdomain():
-    config = configparser.ConfigParser()
-    config.read('app.config')
-    subdomain_from_file = config['secrets']['subdomain']
-    return subdomain_from_file
-
-
 # call API to get json data of form entries
 url = "https://mrglass27.wufoo.com/api/v3/forms/zse7wqw1sji2tk/entries/json"
 
