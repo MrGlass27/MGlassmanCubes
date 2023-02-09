@@ -33,7 +33,7 @@ def push_to_table(info, cursor):
             entry.get('Field213', None)
 
         cursor.execute('''INSERT INTO cubes_table VALUES(?,?,?,?,?,?,?,?,?,?,?)''',
-                       (entry.get('EntryID'),
+                       (entry.get('EntryID', None),
                         entry.get('Field1', None),
                         entry.get('Field2', None),
                         entry.get('Field104', None),
