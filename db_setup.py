@@ -52,7 +52,7 @@ def database_setup():
     connection = None
 
     try:
-        name = 'cubesdatabase.db'
+        name = 'cubes_database.db'
         connection = sqlite3.connect(name)
         cursor = connection.cursor()
         create_table(cursor)
