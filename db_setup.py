@@ -5,7 +5,7 @@ from form_collection import get_json
 
 def create_table(cursor):
     cursor.execute('''CREATE TABLE IF NOT EXISTS cubes_table (
-                                    id text NOT NULL,
+                                    id text,
                                     firstname text NOT NULL,
                                     lastname text NOT NULL,
                                     title text,
