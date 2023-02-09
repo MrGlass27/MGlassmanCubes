@@ -40,3 +40,4 @@ def get_json() -> dict:
         sys.exit(-1)
     jsonresponse = response.json()
     return jsonresponse
+

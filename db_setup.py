@@ -4,7 +4,7 @@ from form_collection import get_json
 
 
 sql_create_cubes_table = """ CREATE TABLE IF NOT EXISTS cubes_table (
-                                    id integer,
+                                    id text NOT NULL,
                                     firstname text NOT NULL,
                                     lastname text NOT NULL,
                                     title text,
@@ -38,8 +38,8 @@ def push_to_table(info, cursor):
             entry.get('Field211', None) + " " + entry.get('Field212', None) + " " + \
             entry.get('Field213', None)
 
-        cursor.execute('''INSERT INTO cubes_table VALUES(?,?,?,?,?,?,?,?,?,?,?)''',
-                       (entry.get('EntryID', None),
+        cursor.execute("INSERT INTO cubes_table VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                       (entry.get('EntryID'),
                         entry.get('Field1', None),
                         entry.get('Field2', None),
                         entry.get('Field104', None),
