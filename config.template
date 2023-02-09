@@ -1,4 +1,2 @@
 [secrets]
 apikey = put api key here
-identifier = put form identifier here
-subdomain = put subdomain here
