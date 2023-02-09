@@ -1,16 +1,6 @@
-import configparser
 import requests
 import sys
 from requests.auth import HTTPBasicAuth
-
-
-# gets apikey from config file
-# comment to test workflow
-def get_apikey():
-    config = configparser.ConfigParser()
-    config.read('app.config')
-    apikey_from_file = config['secrets']['apikey']
-    return apikey_from_file
 
 
 # call API to get json data of form entries
