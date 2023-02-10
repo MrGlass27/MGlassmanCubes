@@ -15,4 +15,3 @@ def get_json():
         sys.exit(-1)
     jsonresponse = response.json()
     return jsonresponse
-
