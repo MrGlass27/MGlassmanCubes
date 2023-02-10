@@ -1,5 +1,5 @@
-import requests
 import sys
+import requests
 from requests.auth import HTTPBasicAuth
 from secrets import wufoo_key
 
