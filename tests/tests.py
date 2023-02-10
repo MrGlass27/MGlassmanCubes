@@ -1,5 +1,4 @@
 from form_collection import get_json
-from db_setup import push_to_table
 import sqlite3
 
 
@@ -10,8 +9,6 @@ def test_form_number():
 
 
 def test_database_exists():
-    json_response = get_json()
-    json_response = json_response['Entries']
     name = 'cubes_database.db'
     connection = sqlite3.connect(name)
     cursor = connection.cursor()
@@ -29,6 +26,7 @@ def test_database_exists():
                                        permission text
                                    ); ''')
     cursor.execute('''DELETE FROM cubes_table''')
-    push_to_table(json_response, cursor)
+    cursor.execute('''INSERT INTO cubes_table VALUES(?,?,?,?,?,?,?,?,?,?,?)''',
+                   (1, 'matt', 'glass', 'lord', 'inc', 'gmail', 'website', 'cell', 'job', 'summer', 'yes'))
     results = cursor.execute("SELECT * from cubes_table").fetchall()
     assert results != []
