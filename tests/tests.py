@@ -1,6 +1,18 @@
-from form_collection import get_json
 import sqlite3
+import sys
 import requests
+from requests.auth import HTTPBasicAuth
+from secrets import wufoo_key
+from form_collection import url
+
+
+def get_json():
+    response = requests.get(url, auth=HTTPBasicAuth(wufoo_key, 'pass'))
+    if response.status_code != 200:  # if we don't get an ok response we have trouble
+        print(f"Failed to get data, response code:{response.status_code} and error message: {response.reason} ")
+        sys.exit(-1)
+    jsonresponse = response.json()
+    return jsonresponse
 
 
 def test_form_number():
