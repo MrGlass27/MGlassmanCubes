@@ -37,10 +37,11 @@ def push_to_table(info, cursor):
             entry_values[0]
         )  # the EntryID is a string, but I want it to be a number
         entry_values = entry_values[:-2]
-        cursor.execute("""INSERT OR IGNORE INTO WuFooData (entryID, prefix, first_name, last_name, title, org, email, 
+        cursor.execute("""INSERT OR IGNORE INTO WuFooData (
+        entryID, prefix, first_name, last_name, title, org, email, 
         website, course_project, guest_speaker, site_visit, job_shadow, internship, career_panel, networking_event,
-        subject_area, description, funding, created_date, created_by) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"""
-                       , entry_values)
+        subject_area, description, funding, created_date, created_by)
+         VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", entry_values)
 
 
 def database_setup():
