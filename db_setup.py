@@ -4,46 +4,45 @@ from form_collection import get_json
 
 
 def create_table(cursor):
-    cursor.execute('''CREATE TABLE IF NOT EXISTS cubes_table (
-                                    id INTEGER PRIMARY KEY,
-                                    firstname text NOT NULL,
-                                    lastname text NOT NULL,
-                                    title text,
-                                    organization text NOT NULL,
-                                    email text NOT NULL,
-                                    website text,
-                                    phone text,
-                                    opportunities text,
-                                    time text,
-                                    permission text
-                                ); ''')
+    cursor.execute("""CREATE TABLE IF NOT EXISTS WuFooData(
+    entryID INTEGER PRIMARY KEY,
+    prefix TEXT NOT NULL,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    title TEXT,
+    org TEXT,
+    email TEXT,
+    website TEXT,
+    course_project BOOLEAN,
+    guest_speaker BOOLEAN,
+    site_visit BOOLEAN,
+    job_shadow BOOLEAN,
+    internship BOOLEAN,
+    career_panel BOOLEAN,
+    networking_event BOOLEAN,
+    subject_area TEXT NOT NULL,
+    description TEXT,
+    funding BOOLEAN,
+    created_date TEXT,
+    created_by TEXT);""")
 
     cursor.execute('''DELETE FROM cubes_table''')
 
 
 def push_to_table(info, cursor):
+    # the insert or ignore syntax will insert if the primary key isn't in use or ignore if the primary key is in the DB
+    insert_statement = """INSERT OR IGNORE INTO WuFooData (entryID, prefix, first_name, last_name, title, org, email, 
+    website,course_project, guest_speaker, site_visit, job_shadow, internship, career_panel, networking_event,
+    subject_area, description, funding, created_date, created_by) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"""
     for entry in info:
-        work_opportunities = entry.get('Field109', None) + " " + entry.get('Field110', None) + " " + \
-                             entry.get('Field111', None) + " " + entry.get('Field112', None) + " " + \
-                             entry.get('Field113', None) + " " + entry.get('Field114', None) + " " + \
-                             entry.get('Field115', None)
-
-        time_period = entry.get('Field209', None) + " " + entry.get('Field210', None) + " " + \
-            entry.get('Field211', None) + " " + entry.get('Field212', None) + " " + \
-            entry.get('Field213', None)
-
-        cursor.execute('''INSERT INTO cubes_table VALUES(?,?,?,?,?,?,?,?,?,?,?)''',
-                       (entry.get('EntryID', None),
-                        entry.get('Field1', None),
-                        entry.get('Field2', None),
-                        entry.get('Field104', None),
-                        entry.get('Field105', None),
-                        entry.get('Field106', None),
-                        entry.get('Field107', None),
-                        entry.get('Field108', None),
-                        work_opportunities,
-                        time_period,
-                        entry.get('Field309', None)))
+        entry_values = list(
+            entry.values()
+        )  # get the list of values from the dictionary
+        entry_values[0] = int(
+            entry_values[0]
+        )  # the EntryID is a string, but I want it to be a number
+        entry_values = entry_values[:-2]
+        cursor.execute(insert_statement, entry_values)
 
 
 def database_setup():
