@@ -25,7 +25,6 @@ def create_table(cursor):
     funding BOOLEAN,
     created_date TEXT,
     created_by TEXT);""")
-
     cursor.execute('''DELETE FROM cubes_table''')
 
 
